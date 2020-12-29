@@ -1,0 +1,9 @@
+<c:forEach var='i' begin='{startPage}' end='{endPage}'>
+	<c:if test='${pgNum == i}'>
+		<a href='/javas/board/{boardType}?pgNum=i{linkStr}' style='font-weight:bold;font-size:45px;'>i</a>
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+	</c:if>
+	<c:if test='${pgNum != i}'>
+		<a href='/javas/board/{boardType}?pgNum=i{linkStr}' style='font-size:45px;'>i</a>
+	</c:if>
+</c:forEach>

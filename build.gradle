@@ -1,0 +1,65 @@
+plugins {
+        id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.exercise'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    compile group: 'org.springframework', name: 'spring-context', version: '5.2.6.RELEASE'
+    // https://mvnrepository.com/artifact/commons-logging/commons-logging
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-commons
+    compile group: 'org.junit.platform', name: 'junit-platform-commons', version: '1.5.1'
+
+    compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+    compile('javax.servlet:jstl:1.2')
+    // https://mvnrepository.com/artifact/org.mockito/mockito-all
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.2.1'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.5.RELEASE'
+
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
