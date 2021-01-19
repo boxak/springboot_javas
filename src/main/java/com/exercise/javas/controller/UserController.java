@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("deleteUser")
     public ModelAndView deleteUser(@NotBlank String id) {
-        return userService.deleteUser(id);
+        return userService.delete(id);
     }
 
     @ResponseBody

@@ -1,5 +1,7 @@
 package com.exercise.javas.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -70,6 +73,7 @@ public class UserDTO implements Serializable {
     @NotBlank(message = "활동 유형을 선택해주세요!")
     @Pattern(regexp = "^(jobad|wantad)$",
             message = "유효한 타입이 아닙니다!")
+
     @Field("userType")
     private String userType;
 }

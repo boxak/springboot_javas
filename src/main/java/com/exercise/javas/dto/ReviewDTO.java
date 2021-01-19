@@ -3,22 +3,31 @@ package com.exercise.javas.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Getter
 @Setter
 @ToString
+@Document(collection = "ReviewInfo")
 public class ReviewDTO implements Serializable {
-    @Field("reviewId")
+    @Id
     private String reviewId;
-    @Field("id")
+    @Field("postId")
+    private String postId;
+    @Field("reviewerId")
     private String reviewerId;
+    @Field("targetId")
+    private String targetId;
+    @NotBlank(message = "코멘트를 입력해주세요!")
     @Field("comment")
     private String comment;
     @Field("date")
     private String date;
     @Field("rate")
-    private float rate;
+    private double rate;
 }

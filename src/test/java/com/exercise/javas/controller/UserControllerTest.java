@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
@@ -66,11 +67,10 @@ public class UserControllerTest {
 
         content = new ObjectMapper().writeValueAsString(dto);
         System.out.println(content);
-        String photo_path = "C:\\Users\\SEC\\Documents\\예지.png";
+        String photo_path = "C:\\Users\\Administrator\\Documents\\yeji.png";
         File f = new File(photo_path);
 
         photo = new MockMultipartFile("예지.png", new FileInputStream(f));
-
     }
 
     @Test

@@ -5,6 +5,7 @@ import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -23,15 +24,9 @@ public class BoardDTO implements Serializable {
     @Id
     private String postId;
 
-    @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]{4,15}$",
-            message = "유효한 아이디 형식이 아닙니다!")
-    @Field("id")
-    private String id;
+    @Field("userId")
+    private String userId;
 
-    @NotBlank
-    @Pattern(regexp = "^[ㄱ-ㅎㅏ-ㅣ가-힣]{2,20}$",
-            message = "유효한 이름이 아닙니다!")
     @Field("name")
     private String name;
 
@@ -45,8 +40,6 @@ public class BoardDTO implements Serializable {
     @Field("content")
     private String content;
 
-    @NotBlank
-    @Pattern(regexp = "^(202\\d)-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\\d|30|31) ([0-1]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$")
     @Field("date")
     private String date;
 
@@ -55,11 +48,6 @@ public class BoardDTO implements Serializable {
 
     @Field("reviewCnt")
     private int reviewCnt;
-
-    @Nullable
-    @Field("reviewList")
-    @JsonProperty("reviewList")
-    private transient List<ReviewDTO> reviewList;
 
     @NotBlank
     @Field("boardType")

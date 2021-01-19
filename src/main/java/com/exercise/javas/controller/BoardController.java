@@ -29,9 +29,11 @@ public class BoardController {
         return boardService.listOne(postId);
     }
 
-    @GetMapping("/board/{action}Form")
-    public String insertForm(@PathVariable String action) {
-        return "board" + action + "Form";
+    @GetMapping("/board/{boardType}/{action}Form")
+    public ModelAndView insertForm(@PathVariable String action,
+                                   @PathVariable String boardType) {
+        return new ModelAndView("board" + action + "Form")
+                .addObject(JavasConstants.BOARD_TYPE, boardType);
     }
 
     @GetMapping("/board/delete")

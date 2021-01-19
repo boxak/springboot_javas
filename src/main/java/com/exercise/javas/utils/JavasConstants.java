@@ -27,4 +27,5 @@ public class JavasConstants {
     public static final String MEMINFO_MODIFY = "meminfomodify";
     public static final String NOTICE_RESULT = "noticeResult";
     public static final String IS_IDEXIST = "isIdExist";
+    public static final String MSG_TYPE = "type";
 }

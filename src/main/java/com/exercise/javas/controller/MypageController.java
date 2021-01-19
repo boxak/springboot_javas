@@ -2,11 +2,9 @@ package com.exercise.javas.controller;
 
 import com.exercise.javas.dto.UserDTO;
 import com.exercise.javas.service.MypageService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,5 +35,11 @@ public class MypageController {
                                       HttpSession session,
                                       HttpServletRequest request) {
         return mypageService.meminfoupdate(dto, photo, session, request);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/myreviews", produces = "application/json; charset=UTF-8")
+    public String myreviews(HttpSession session) throws JsonProcessingException {
+        return mypageService.myreviews(session);
     }
 }

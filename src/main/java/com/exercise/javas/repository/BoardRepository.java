@@ -16,8 +16,6 @@ public interface BoardRepository extends MongoRepository<BoardDTO, String> {
 
     List<BoardDTO> findAllByBoardType(String boardType, Pageable pageable);
 
-    List<BoardDTO> findAllByBoardTypeAndId(String boardType, String id, Pageable pageable);
-
     @Query("{$and : [{boardType : ?0},{$or : [{title:{$regex:?1}},{content:{$regex:?1}}]}]}")
     List<BoardDTO> findAllByBoardTypeAndTitleContainsOrContentContains(String boardType, String key, Pageable pageable);
 
@@ -25,9 +23,9 @@ public interface BoardRepository extends MongoRepository<BoardDTO, String> {
 
     List<BoardDTO> findAllByBoardTypeAndContentContains(String boardType, String content, Pageable pageable);
 
-    long countAllByBoardType(String boardType);
+    List<BoardDTO> findAllByBoardTypeAndUserId(String boardType, String userId, Pageable pageable);
 
-    long countAllByBoardTypeAndId(String boardType, String id);
+    long countAllByBoardType(String boardType);
 
     @Query(value = "{$and : [{boardType : ?0},{$or : [{title:{$regex:?1}},{content:{$regex:?1}}]}]}", count = true)
     long countAllByBoardTypeAndTitleContainsOrContentContains(String boardType, String key);
@@ -35,4 +33,6 @@ public interface BoardRepository extends MongoRepository<BoardDTO, String> {
     long countAllByBoardTypeAndTitleContains(String boardType, String title);
 
     long countAllByBoardTypeAndContentContains(String boardType, String content);
+
+    long countAllByBoardTypeAndUserId(String boardType, String userId);
 }

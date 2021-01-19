@@ -1,9 +1,6 @@
 package com.exercise.javas.repository;
 
-import com.exercise.javas.config.MongoConfig;
 import com.exercise.javas.dto.UserDTO;
-import com.exercise.javas.utils.JavasConstants;
-import com.exercise.javas.utils.JavasUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +8,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Slf4j
 @DataMongoTest
@@ -25,7 +18,7 @@ class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
-    static UserDTO dto;
+    static UserDTO dto = new UserDTO();
 
     static int num = 0;
 

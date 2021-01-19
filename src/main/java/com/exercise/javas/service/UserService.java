@@ -22,10 +22,11 @@ public class UserService {
 
     public ModelAndView insert(UserDTO dto, MultipartFile photo, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
+        mav.addObject(JavasConstants.MSG_TYPE,"insertUser");
         log.info(dto.toString());
         try {
             userRepository.save(dto);
-            JavasUtils.uploadPhoto(dto.getId(), photo);
+            JavasUtils.uploadPhoto(dto.getId(), photo, request);
             mav.addObject(JavasConstants.MSG, "회원가입 되었습니다.");
         } catch (Exception e) {
             log.warn(" :::: update user info processing error! {} ::::", e.getMessage());
@@ -34,8 +35,9 @@ public class UserService {
         return mav;
     }
 
-    public ModelAndView deleteUser(String id) {
+    public ModelAndView delete(String id) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
+        mav.addObject(JavasConstants.MSG_TYPE, "deleteUser");
         try {
             userRepository.deleteById(id);
             mav.addObject(JavasConstants.MSG, "탈퇴되었습니다.");
@@ -45,14 +47,13 @@ public class UserService {
         return mav;
     }
 
-    public Map<String, String> idCheck(String id) {
-        HashMap<String, String> jsonMap = new HashMap<>();
+    public boolean hasId(String id) {
+        boolean result = false;
         try {
-            boolean result = userRepository.existsById(id);
-            jsonMap.put(JavasConstants.IS_IDEXIST, result+"");
+            result = userRepository.existsById(id);
         } catch (Exception e) {
             log.warn(JavasUtils.messegingExLog(e.toString(),e.getMessage()));
         }
-        return jsonMap;
+        return result;
     }
 }

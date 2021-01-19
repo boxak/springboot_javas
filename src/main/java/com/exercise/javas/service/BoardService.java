@@ -44,6 +44,9 @@ public class BoardService {
         } else if ("content".equals(searchType)) {
             boardList = boardRepository.findAllByBoardTypeAndContentContains(boardType, key, page);
             totalPostCnt = boardRepository.countAllByBoardTypeAndContentContains(boardType, key);
+        } else if("id".equals(searchType)) {
+            boardList = boardRepository.findAllByBoardTypeAndUserId(boardType, key, page);
+            totalPostCnt = boardRepository.countAllByBoardTypeAndUserId(boardType, key);
         }
 
         String linkStr = "&type=" + searchType + "&key" + key;
@@ -65,13 +68,17 @@ public class BoardService {
         BoardDTO dto = boardRepository.findById(postId).orElse(new BoardDTO());
 
         String boardType = dto.getBoardType();
+        int hit = dto.getHit();
+        dto.setHit(hit+1);
+        boardRepository.save(dto);
         mav.addObject(JavasConstants.DTO, dto);
         mav.addObject(JavasConstants.BOARD_TYPE_TITLE, boardType.equals(JavasConstants.JOBAD) ? "구인 내용" : "구직 내용");
         return mav;
     }
 
     public ModelAndView delete(String postId) {
-        ModelAndView mav = new ModelAndView("noticeResult");
+        ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
+        mav.addObject(JavasConstants.MSG_TYPE, "deleteBoard");
         try {
             boardRepository.deleteById(postId);
             mav.addObject(JavasConstants.MSG, "삭제에 성공했습니다.");
@@ -83,7 +90,7 @@ public class BoardService {
     }
 
     public ModelAndView doPost(String action, BoardDTO dto) {
-        ModelAndView mav = new ModelAndView("noticeResult");
+        ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
         String actionKor = "insert".equals(action) ? "삽입" : "수정";
         String result = "";
         try {
@@ -95,6 +102,8 @@ public class BoardService {
         }
         String msg = actionKor + "에 " + result + "하였습니다.";
         mav.addObject(JavasConstants.MSG, msg);
+        mav.addObject(JavasConstants.MSG_TYPE, "insert".equals(action)
+        ? "insertBoard" : "updateBoard");
         return mav;
     }
 }

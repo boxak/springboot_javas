@@ -7,6 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.filechooser.FileSystemView;
@@ -17,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 @Slf4j
 @PropertySource("/properties/File_Path.properties")
@@ -28,15 +36,19 @@ public class JavasUtils {
     @Value("${photo.directory}")
     static String photoUploadDir;
 
-    public static void uploadPhoto(String id, MultipartFile photo) {
+    public static void uploadPhoto(String id, MultipartFile photo,
+                                   HttpServletRequest request) {
         byte[] content = null;
-        String path = photoUploadDir + id + ".png";
-        log.info("photo path :::: {}",path);
-        File f = new File(path);
-        try(FileOutputStream fos = new FileOutputStream(f)) {
-            if (! photo.isEmpty()) {
+        try {
+            if (!photo.isEmpty()) {
                 content = photo.getBytes();
+                String path = request.getSession().getServletContext().getRealPath("/")
+                        + "resources/images2" + id + ".png";
+                log.info("photo path :::: {}", path);
+                File f = new File(path);
+                FileOutputStream fos = new FileOutputStream(f);
                 fos.write(content);
+                fos.close();
             }
         } catch (IOException e) {
             log.info(messegingExLog(e.toString(), e.getMessage()));
@@ -76,10 +88,10 @@ public class JavasUtils {
 
         String pageStr = builder.toString();
 
-        pageStr = pageStr.replace("\\{boardType}", boardType);
-        pageStr = pageStr.replace("\\{startPage}", startPage+"");
-        pageStr = pageStr.replace("\\{endPage}", endPage+"");
-        pageStr = pageStr.replace("\\{linkStr}", linkStr);
+        pageStr = pageStr.replace("{boardType}", boardType);
+        pageStr = pageStr.replace("{startPage}", startPage + "");
+        pageStr = pageStr.replace("{endPage}", endPage + "");
+        pageStr = pageStr.replace("{linkStr}", linkStr);
 
         return pageStr;
     }
@@ -98,5 +110,44 @@ public class JavasUtils {
 
     public static String getTodayString(String dateFormat) {
         return new SimpleDateFormat(dateFormat).format(new Date());
+    }
+
+    public void sendEmail(String email, String subject, String body) throws MessagingException {
+        String host = "smtp.naver.com";
+        final String username = "boxak";
+        final String pw = "Second142857!";
+        int port = 465;
+
+        String recipient = email;
+
+        try {
+            Properties properties = System.getProperties();
+            properties.put("mail.smtp.host", host);
+            properties.put("mail.smtp.port", port);
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.enable", "true");
+            properties.put("mail.smtp.ssl.trust", host);
+
+            Session session = Session.getDefaultInstance(properties,
+                    new javax.mail.Authenticator() {
+                        String un = username;
+                        String userpw = pw;
+
+                        protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                            return new javax.mail.PasswordAuthentication(un, userpw);
+                        }
+                    });
+            session.setDebug(true);
+
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username+"@naver.com"));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+            message.setSubject(subject,"UTF-8");
+            message.setText(body, "UTF-8");
+            message.setHeader("content-Type", "text/html");
+            Transport.send(message);
+        } catch (Exception e) {
+            JavasUtils.messegingExLog(e.toString(), e.getMessage());
+        }
     }
 }
