@@ -20,7 +20,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
     if (dto != null) {
       return true;
     } else {
-      response.sendRedirect("/javas/authloginfail");
+      response.sendRedirect("/javas/noticeResult?type=notLogin");
       return false;
     }
   }

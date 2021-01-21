@@ -40,7 +40,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/idCheck")
-    public Map<String, String> idCheck(@NotBlank String id) {
-        return userService.idCheck(id);
+    public String idCheck(@NotBlank String id) {
+        return userService.hasId(id);
     }
 }

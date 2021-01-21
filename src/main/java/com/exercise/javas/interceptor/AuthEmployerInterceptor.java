@@ -22,7 +22,7 @@ public class AuthEmployerInterceptor extends HandlerInterceptorAdapter {
             if ("jobad".equals(dto.getUserType())) {
                 return true;
             } else {
-                response.sendRedirect("/javas/authfail");
+                response.sendRedirect("/javas/noticeResult?type=unauthorized");
                 return false;
             }
         } else {

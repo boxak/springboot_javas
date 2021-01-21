@@ -1,6 +1,7 @@
 package com.exercise.javas.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,5 +25,12 @@ public class MainController {
     @GetMapping("/afterlogin")
     public ModelAndView afterlogin() {
         return new ModelAndView("redirect:main");
+    }
+
+    @GetMapping("/noticeResult")
+    public ModelAndView noticeResult(@RequestParam(required = false,
+            defaultValue = "normal") String msgType) {
+        return new ModelAndView("noticeResult")
+                .addObject("type",msgType);
     }
 }

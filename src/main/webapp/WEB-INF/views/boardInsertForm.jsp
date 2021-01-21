@@ -115,11 +115,11 @@
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<c:if test="${!empty loginVO}">
+				<c:if test="${!empty loginDTO}">
 					<li class="nav-item"><a href="/javas/mypage" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">마이페이지</a></li>
 					<li class="nav-item"><a href="/javas/logout" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그아웃</a></li>
 				</c:if>         	
-				<c:if test="${empty loginVO}">
+				<c:if test="${empty loginDTO}">
 	          	<li class="nav-item"><a href="/javas/login/form" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그인</a></li>
 	          	<li class="nav-item"><a href="/javas/signForm" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">회원가입</a></li>
 	          	</c:if>
@@ -133,14 +133,15 @@
     <div class="container">
 <div class="col-md-5" style="margin: auto 300px;">
     <div class="form-area">  
-        <form method="post" action="/javas/board/${ boardType }/post">
+        <form method="post" action="/javas/board/post">
         <input type="hidden" name="action" value="insert">
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center; font-family: 'Do Hyeon', sans-serif; font-size: 30px;">글 작성하기</h3>
                     <div class="form-group">
 						 <input class="form-control" type="hidden" name="postId" value="a">
-						 <input class="form-control" type="hidden" name="id" value="${loginVO.id}">
-						 <input class="form-control" type="hidden" name="name" value="${loginVO.name}">
+						 <input class="form-control" type="hidden" name="id" value="${loginDTO.id}">
+						 <input class="form-control" type="hidden" name="name" value="${loginDTO.name}">
+						<input class="form-control" type="hidden" name="boardType" value="${boardType}">
 						 <jsp:useBean id="now" class="java.util.Date" />
 						 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today" />
 
@@ -199,22 +200,5 @@
                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">@JAVAS</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
     </footer>
-	
-  <script src="/javas/resources/js/jquery.min.js"></script>
-  <script src="/javas/resources/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/javas/resources/js/popper.min.js"></script>
-  <script src="/javas/resources/js/bootstrap.min.js"></script>
-  <script src="/javas/resources/js/jquery.easing.1.3.js"></script>
-  <script src="/javas/resources/js/jquery.waypoints.min.js"></script>
-  <script src="/javas/resources/js/jquery.stellar.min.js"></script>
-  <script src="/javas/resources/js/owl.carousel.min.js"></script>
-  <script src="/javas/resources/js/jquery.magnific-popup.min.js"></script>
-  <script src="/javas/resources/js/aos.js"></script>
-  <script src="/javas/resources/js/jquery.animateNumber.min.js"></script>
-  <script src="/javas/resources/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/javas/resources/js/google-map.js"></script>
-  <script src="/javas/resources/js/main.js"></script>
-  <script src="/javas/resources/js/bootstrap-select.js"></script>	
 </body>
 </html>

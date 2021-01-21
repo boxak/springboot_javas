@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -20,13 +21,14 @@ public class BoardController {
     public ModelAndView list(@PathVariable @NotNull String boardType,
                              @RequestParam(defaultValue = "1") int pgNum,
                              @RequestParam(value = JavasConstants.KEY, required = false) String key,
-                             @RequestParam(value = JavasConstants.TYPE, required = false) String type) {
-        return boardService.list(boardType, pgNum, key, type);
+                             @RequestParam(value = JavasConstants.TYPE, required = false) String type,
+                             HttpSession session) {
+        return boardService.list(boardType, pgNum, key, type, session);
     }
 
     @GetMapping("/board/listOne")
-    public ModelAndView listOne(String postId) {
-        return boardService.listOne(postId);
+    public ModelAndView listOne(String postId, HttpSession session) {
+        return boardService.listOne(postId, session);
     }
 
     @GetMapping("/board/{boardType}/{action}Form")

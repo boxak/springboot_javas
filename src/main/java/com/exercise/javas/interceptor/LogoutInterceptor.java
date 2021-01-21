@@ -16,7 +16,7 @@ public class LogoutInterceptor extends HandlerInterceptorAdapter {
     HttpSession session = request.getSession();
     UserDTO dto = (UserDTO) session.getAttribute(JavasConstants.LOGIN_DTO);
     if (dto == null) {
-      response.sendRedirect("/javas/logout/fail");
+      response.sendRedirect("/javas/noticeResult?type=alreadyLogout");
       return false;
     } else {
       return true;

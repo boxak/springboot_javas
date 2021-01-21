@@ -24,13 +24,13 @@ public class LoginService {
         boolean hasId = loginRepository.existsById(id);
         if (!hasId) {
             mav.setViewName(JavasConstants.NOTICE_RESULT);
-            mav.addObject(JavasConstants.MSG_TYPE, "login");
+            mav.addObject(JavasConstants.MSG_TYPE, "loginError");
             mav.addObject(JavasConstants.MSG, "존재하지 않는 아이디입니다!");
         } else {
             dto = loginRepository.findFirstByIdAndPassword(id, password);
             if (dto == null) {
                 mav.setViewName(JavasConstants.NOTICE_RESULT);
-                mav.addObject(JavasConstants.MSG_TYPE,"login");
+                mav.addObject(JavasConstants.MSG_TYPE,"loginError");
                 mav.addObject(JavasConstants.MSG, "비밀번호가 일치하지 않습니다!");
             } else {
                 session.setAttribute(JavasConstants.LOGIN_DTO,dto);

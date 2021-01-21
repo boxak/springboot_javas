@@ -22,7 +22,6 @@ public class UserService {
 
     public ModelAndView insert(UserDTO dto, MultipartFile photo, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
-        mav.addObject(JavasConstants.MSG_TYPE,"insertUser");
         log.info(dto.toString());
         try {
             userRepository.save(dto);
@@ -37,7 +36,6 @@ public class UserService {
 
     public ModelAndView delete(String id) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
-        mav.addObject(JavasConstants.MSG_TYPE, "deleteUser");
         try {
             userRepository.deleteById(id);
             mav.addObject(JavasConstants.MSG, "탈퇴되었습니다.");
@@ -47,13 +45,13 @@ public class UserService {
         return mav;
     }
 
-    public boolean hasId(String id) {
+    public String hasId(String id) {
         boolean result = false;
         try {
             result = userRepository.existsById(id);
         } catch (Exception e) {
             log.warn(JavasUtils.messegingExLog(e.toString(),e.getMessage()));
         }
-        return result;
+        return String.valueOf(result);
     }
 }

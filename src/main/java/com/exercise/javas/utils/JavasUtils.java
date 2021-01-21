@@ -112,7 +112,7 @@ public class JavasUtils {
         return new SimpleDateFormat(dateFormat).format(new Date());
     }
 
-    public void sendEmail(String email, String subject, String body) throws MessagingException {
+    public static void sendEmail(String email, String subject, String body) throws MessagingException {
         String host = "smtp.naver.com";
         final String username = "boxak";
         final String pw = "Second142857!";

@@ -17,5 +17,5 @@ public interface FindRepository extends MongoRepository<UserDTO, String> {
 
     UserDTO findFirstByIdAndNameAndEmail(String id, String name, String email);
 
-    UserDTO findFirstByEmailAndPassword(String email, String password);
+    UserDTO findFirstByEmail(String email);
 }

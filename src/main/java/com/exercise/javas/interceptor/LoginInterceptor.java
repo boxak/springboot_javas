@@ -16,7 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     HttpSession session = request.getSession();
     UserDTO dto = (UserDTO) session.getAttribute(JavasConstants.LOGIN_DTO);
     if (dto != null) {
-      response.sendRedirect("/javas/login/fail");
+      response.sendRedirect("/javas/noticeResult?type=alreadyLogin");
       return false;
     } else {
       return true;

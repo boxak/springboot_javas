@@ -25,7 +25,7 @@ public class BoardService {
     private static final int POST_CNT_PER_PAGE = 9;
     private static final int PAGE_UNIT = 5;
 
-    public ModelAndView list(String boardType, int pgNum, String key, String searchType) {
+    public ModelAndView list(String boardType, int pgNum, String key, String searchType,HttpSession session) {
         ModelAndView mav = new ModelAndView(JavasConstants.BOARD_VIEW);
 
         List<BoardDTO> boardList = new ArrayList<>();
@@ -59,26 +59,36 @@ public class BoardService {
             mav.addObject("pagelist",pagelist);
         }
 
+        if (!StringUtils.isEmpty(key)) {
+            session.setAttribute("key", key);
+        }
+        if (!StringUtils.isEmpty(searchType)) {
+            session.setAttribute("type",searchType);
+        }
+        session.setAttribute("boardType",boardList);
+        session.setAttribute("pgNum", pgNum);
+
         return mav;
     }
 
-    public ModelAndView listOne(String postId) {
+    public ModelAndView listOne(String postId,HttpSession session) {
         ModelAndView mav = new ModelAndView(JavasConstants.BOARD_VIEW);
 
         BoardDTO dto = boardRepository.findById(postId).orElse(new BoardDTO());
-
-        String boardType = dto.getBoardType();
-        int hit = dto.getHit();
-        dto.setHit(hit+1);
-        boardRepository.save(dto);
-        mav.addObject(JavasConstants.DTO, dto);
-        mav.addObject(JavasConstants.BOARD_TYPE_TITLE, boardType.equals(JavasConstants.JOBAD) ? "구인 내용" : "구직 내용");
+        if (dto != null) {
+            String boardType = dto.getBoardType();
+            int hit = dto.getHit();
+            dto.setHit(hit + 1);
+            boardRepository.save(dto);
+            session.setAttribute("listOne", dto);
+            mav.addObject(JavasConstants.DTO, dto);
+            mav.addObject(JavasConstants.BOARD_TYPE_TITLE, boardType.equals(JavasConstants.JOBAD) ? "구인 내용" : "구직 내용");
+        }
         return mav;
     }
 
     public ModelAndView delete(String postId) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
-        mav.addObject(JavasConstants.MSG_TYPE, "deleteBoard");
         try {
             boardRepository.deleteById(postId);
             mav.addObject(JavasConstants.MSG, "삭제에 성공했습니다.");
@@ -102,8 +112,6 @@ public class BoardService {
         }
         String msg = actionKor + "에 " + result + "하였습니다.";
         mav.addObject(JavasConstants.MSG, msg);
-        mav.addObject(JavasConstants.MSG_TYPE, "insert".equals(action)
-        ? "insertBoard" : "updateBoard");
         return mav;
     }
 }

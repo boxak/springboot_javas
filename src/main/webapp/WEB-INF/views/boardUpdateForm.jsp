@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page
-	import="vo.BoardVO,java.util.List"%>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -119,11 +117,11 @@
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<c:if test="${!empty loginVO}">
+				<c:if test="${!empty loginDTO}">
 					<li class="nav-item"><a href="/javas/mypage" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">마이페이지</a></li>
 					<li class="nav-item"><a href="/javas/logout" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그아웃</a></li>
 				</c:if>         	
-				<c:if test="${empty loginVO}">
+				<c:if test="${empty loginDTO}">
 	          	<li class="nav-item"><a href="/javas/login/form" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그인</a></li>
 	          	<li class="nav-item"><a href="/javas/signForm" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">회원가입</a></li>
 	          	</c:if>
@@ -137,13 +135,13 @@
 <div class="container">
 <div class="col-md-5" style="margin: auto 300px;">
     <div class="form-area">  
-        <form method="post" action="/javas/board/${ boardType }/post">
+        <form method="post" action="/javas/board/post">
        <input type="hidden" name="action" value="update">
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center; font-family: 'Do Hyeon', sans-serif; font-size: 30px;">글 수정하기</h3>
-                    <div class="form-group">
+                    <%--<div class="form-group">
 						 <input type="hidden" class="form-control" name="pgNum" value="${sessionScope.pgNum}">
-					</div>
+					</div>--%>
 					<div class="form-group">
 						 <input type="hidden" class="form-control" name="postId" value="${listOne.postId}">
 						 <input type="hidden" class="form-control" name="id" value="${listOne.id}">
@@ -151,6 +149,7 @@
 						 <input type="hidden" class="form-control" name="date" value="${ listOne.date }">
 						 <input type="hidden" class="form-control" name="hit" value="${ listOne.hit }">
 						 <input type="hidden" class="form-control" name="reviewCnt" value="${ listOne.reviewCnt }">
+						 <input type="hidden" class="form-control" name="boardType" value="${ listOne.boardType }">
 					</div>
     				<div class="form-group">
 						<input type="text"  class="form-control" name="title" value="${ listOne.title }">
@@ -168,7 +167,7 @@
 						<input type="number" class="form-control" name="post_phone" value="<%= vo.getPost_phone() %>">		
 					</div> --%>
 		<div style="text-align:center;">
-        <button type="button" onclick="location.href='/javas/board/${ boardType }/listOne?postId=${listOne.postId}'" class="btn btn-primary pull-right" style="margin-right: 80px;">수정 취소</button>
+        <button type="button" onclick="location.href='/javas/board/listOne?postId=${listOne.postId}'" class="btn btn-primary pull-right" style="margin-right: 80px;">수정 취소</button>
         <input type="reset" value="다시 쓰기" class="btn btn-primary pull-right" style="margin-right: 10px;">
         <input type="submit" value="수정 완료" class="btn btn-primary pull-right" style="margin-right: 10px;">
         </div>
