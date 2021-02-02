@@ -29,8 +29,8 @@ public class MainController {
 
     @GetMapping("/noticeResult")
     public ModelAndView noticeResult(@RequestParam(required = false,
-            defaultValue = "normal") String msgType) {
+            defaultValue = "normal") String type) {
         return new ModelAndView("noticeResult")
-                .addObject("type",msgType);
+                .addObject("type",type);
     }
 }

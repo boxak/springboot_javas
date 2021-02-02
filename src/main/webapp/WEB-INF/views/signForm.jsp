@@ -207,13 +207,13 @@ width : 400px;
 		</tr>
 		<tr><td>&nbsp;</td></tr>
 		<tr>
-			<td id = table4><b>*</b> 직업 </td><td> <SELECT name='isEmployer'>
-				        <OPTION value='1'>사업자</OPTION>
-				        <OPTION value='2'>파트타이머</OPTION>
+			<td id = table4><b>*</b> 직업 </td><td> <SELECT name='userType'>
+				        <OPTION value='jobad'>사업자</OPTION>
+				        <OPTION value='wantad'>파트타이머</OPTION>
 			            </SELECT></td>
 		</tr>
-		<jsp:useBean id="toDay" class="java.util.Date" />
-		<fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd HH:mm' var="nowDate"/>
+		<jsp:useBean id="today" class="java.util.Date" />
+		<fmt:formatDate value='${today}' pattern='yyyy-MM-dd HH:mm' var="nowDate"/>
 		<tr>
 			<td id = table4><b></b></td><td><input id="register_date" style="width: 200px; text-align: left;" type="hidden" name="date"
 			value="${ nowDate }"></td>

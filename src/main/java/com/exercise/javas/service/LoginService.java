@@ -39,7 +39,7 @@ public class LoginService {
                     cookie.setMaxAge(60*60*24*7);
                     response.addCookie(cookie);
                 }
-                mav.setViewName("redirect:afterlogin");
+                mav.setViewName("redirect:main");
             }
         }
         return mav;

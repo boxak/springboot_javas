@@ -18,17 +18,18 @@ public class FindService {
         String message = "";
         try {
             if (!findRepository.existsByName(name)) {
-                message = "해당하는 이름이 없습니다!";
+                mav.addObject(JavasConstants.MSG_TYPE, "noName");
             } else if (!findRepository.existsByNameAndPhone(name, phone)) {
-                message = "이름과 휴대폰 번호가 일치하지 않습니다!";
+                mav.addObject(JavasConstants.MSG_TYPE, "notMatched");
             } else {
                 message = "귀하의 아이디는 " + findRepository.findFirstByNameAndPhone(name, phone).getId()
                         + " 입니다. 로그인 화면으로 돌아갑니다.";
+                mav.addObject(JavasConstants.MSG_TYPE, "findID");
+                mav.addObject(JavasConstants.MSG, message);
             }
         } catch (Exception e) {
             JavasUtils.messegingExLog(e.toString(), e.getMessage());
         }
-        mav.addObject(JavasConstants.MSG, message);
         return mav;
     }
 
@@ -39,6 +40,7 @@ public class FindService {
             UserDTO dto = findRepository.findFirstByIdAndNameAndEmail(id, name, email);
             if (dto == null) {
                 result = "해당하는 정보가 없습니다. 한번 더 확인을 해주세요!";
+                mav.addObject(JavasConstants.MSG_TYPE, "noData");
             } else {
                 String subject = "잉력시장입니다. 고객님의 비밀번호를 재설정하세요.";
                 String body = "<h3>다음 링크를 클릭하시면 고객님의 비밀번호 재설정하는 화면으로 이동합니다.<h3>"
@@ -47,6 +49,7 @@ public class FindService {
                         + "</div>";
                 JavasUtils.sendEmail(email, subject, body);
                 result = "비밀번호를 메일로 보내드렸습니다.\\n\\메일함을 확인해주세요.";
+                mav.addObject(JavasConstants.MSG_TYPE, "findPW");
             }
         } catch (Exception e) {
             JavasUtils.messegingExLog(e.toString(), e.getMessage());

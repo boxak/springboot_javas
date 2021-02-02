@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="vo.UserVO, java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -63,11 +62,11 @@ width : 300px;
 	<hr>
 	<br>
 	<br>
-    <form method="post" name="userInfo" action="/javas/sign.do" enctype="multipart/form-data">
-        <table id=table1>
+    <form method="post" name="userInfo" action="/javas/meminfoupdate" enctype="multipart/form-data">
+        <table id="table1">
         <tr id=table2>
 			<td id = table4><b>*</b> 아이디</td>
-			<td><input id="userid" style="width: 200px; text-align: left;" type="text" name="id" value="${ loginVO.id }">
+			<td><input id="userid" style="width: 200px; text-align: left;" type="text" name="id" value="${ loginDTO.id }">
 			<input type="button" value="중복확인" onclick="openIdCheck();">
 			<input type="hidden" name="idDuplication" value="idUncheck">
 			</td>
@@ -86,30 +85,30 @@ width : 300px;
 			<td id=table2>&nbsp;</td>
 		</tr>
 		<tr id=table2>
-			<td id = table4><b>*</b> 이름</td><td><input id="username" style="width: 200px; text-align: left;" type="text" name="name" value="${ loginVO.name }"></td>
+			<td id = table4><b>*</b> 이름</td><td><input id="username" style="width: 200px; text-align: left;" type="text" name="name" value="${ loginDTO.name }"></td>
 		</tr>
 		<tr id=table2>
 			<td id=table2>&nbsp;</td>
 		</tr>
 		<tr id=table2>
-			<td id = table4><b>*</b> 이메일</td><td><input id="email" style="width: 200px; text-align: left;" type="email" name="email" value="${ loginVO.email }"></td>
+			<td id = table4><b>*</b> 이메일</td><td><input id="email" style="width: 200px; text-align: left;" type="email" name="email" value="${ loginDTO.email }"></td>
 		</tr>
 		<tr id=table2>
 			<td id=table2>&nbsp;</td>
 		</tr>
 		<tr id=table2>	
-			<td id = table4><b>*</b> 생일</td><td><input id="birthday" style="width: 200px; text-align: left;" type="date" name="birthday" value="${ loginVO.birthday }"></td>
+			<td id = table4><b>*</b> 생일</td><td><input id="birthday" style="width: 200px; text-align: left;" type="date" name="birthday" value="${ loginDTO.birthday }"></td>
 		</tr>
 		<tr id=table2>
 			<td id=table2>&nbsp;</td>
 		</tr>
 		<tr id=table2>	
 			<td id = table4><b>*</b> 성별</td><td> <SELECT name='sex'>
-						<c:if test="${ loginVO.sex=='female' }">
+						<c:if test="${ loginDTO.sex=='female' }">
 			            <OPTION value='female'>여자</OPTION>
 			            <OPTION value='male'>남자</OPTION>
 			            </c:if>
-			            <c:if test="${ loginVO.sex=='male' }">
+			            <c:if test="${ loginDTO.sex=='male' }">
 			            <OPTION value='male'>남자</OPTION>
 			            <OPTION value='female'>여자</OPTION>
 			            </c:if>
@@ -119,7 +118,7 @@ width : 300px;
 	    	<td id=table2>&nbsp;</td>
 	    </tr>
 	    <tr id=table2>
-			<td id = table4><b>*</b> 핸드폰 번호</td><td><input id="phone" style="width: 200px; text-align: left;" type="tel" name="phone" value="${ loginVO.phone }"></td>
+			<td id = table4><b>*</b> 핸드폰 번호</td><td><input id="phone" style="width: 200px; text-align: left;" type="tel" name="phone" value="${ loginDTO.phone }"></td>
 		</tr>
 		<tr id=table2>
 			<td>&nbsp;</td>
@@ -127,7 +126,7 @@ width : 300px;
 		<tr id=table2>	
 			<td id = table4><b>*</b> 주소
 			<input type="button" value="주소 검색" onclick="goPopup();"></td><td>
-			<input id="address" style="width: 300px; text-align: left; font-size:12px;" type="text" name="address" value="${ loginVO.address }"
+			<input id="address" style="width: 300px; text-align: left; font-size:12px;" type="text" name="address" value="${ loginDTO.address }"
 			class="form-control" required="true" readonly="true"></td>
 		</tr>
 		<tr id=table2>
@@ -146,13 +145,13 @@ width : 300px;
 		</tr>
 		<tr id=table2>
 			<td id = table4><b>*</b> 직업 </td><td> <SELECT name='isEmployer'>
-						<c:if test="${ loginVO.isEmployer=='1' || empty loginVO }">
-				        <OPTION value='1'>사업자</OPTION>
-				        <OPTION value='2'>파트타이머</OPTION>
+						<c:if test="${ loginDTO.userType=='jodad' || empty loginDTO }">
+				        <OPTION value='jobad'>사업자</OPTION>
+				        <OPTION value='wantad'>파트타이머</OPTION>
 				        </c:if>
-				        <c:if test="${ loginVO.isEmployer=='2' }">
-				        <OPTION value='2'>파트타이머</OPTION>
-				        <OPTION value='1'>사업자</OPTION>
+				        <c:if test="${ loginDTO.userType=='wantad' }">
+				        <OPTION value='wantad'>파트타이머</OPTION>
+				        <OPTION value='jobad'>사업자</OPTION>
 				        </c:if>
 			            </SELECT></td>
 		</tr>

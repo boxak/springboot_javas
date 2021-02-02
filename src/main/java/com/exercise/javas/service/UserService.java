@@ -26,10 +26,10 @@ public class UserService {
         try {
             userRepository.save(dto);
             JavasUtils.uploadPhoto(dto.getId(), photo, request);
-            mav.addObject(JavasConstants.MSG, "회원가입 되었습니다.");
+            mav.addObject(JavasConstants.MSG_TYPE, "joinSuccess");
         } catch (Exception e) {
             log.warn(" :::: update user info processing error! {} ::::", e.getMessage());
-            mav.addObject(JavasConstants.MSG, "Error : 회원가입 실패했습니다.");
+            mav.addObject(JavasConstants.MSG_TYPE, "joinFail");
         }
         return mav;
     }
@@ -38,9 +38,9 @@ public class UserService {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
         try {
             userRepository.deleteById(id);
-            mav.addObject(JavasConstants.MSG, "탈퇴되었습니다.");
+            mav.addObject(JavasConstants.MSG_TYPE, "exitSuccess");
         } catch (Exception e) {
-            mav.addObject(JavasConstants.MSG, "Error : 탈퇴실패");
+            mav.addObject(JavasConstants.MSG_TYPE, "exitFail");
         }
         return mav;
     }

@@ -49,15 +49,22 @@ public class BoardService {
             totalPostCnt = boardRepository.countAllByBoardTypeAndUserId(boardType, key);
         }
 
-        String linkStr = "&type=" + searchType + "&key" + key;
-        String pagelist = JavasUtils.getPageLinkList(boardType, pgNum, linkStr, totalPostCnt);
+        String linkStr = "";
         mav.addObject("boardTypeKor", boardType.equals("jobad") ? "구인 게시판" : "구직 게시판");
-        if (CollectionUtils.isEmpty(boardList)) {
-            mav.addObject("nullErrorMsg", key + "을(를) 포함하는 검색글이 없습니다.");
-        } else {
+        if (!CollectionUtils.isEmpty(boardList)) {
             mav.addObject("boardList", boardList);
-            mav.addObject("pagelist",pagelist);
         }
+
+        if (!StringUtils.isEmpty(searchType)) {
+            if (CollectionUtils.isEmpty(boardList)) {
+                mav.addObject("nullErrorMsg", key + "을(를) 포함하는 검색글이 없습니다.");
+            } else {
+                linkStr = "&type=" + searchType + "&key" + key;
+            }
+        }
+
+        String pagelist = JavasUtils.getPageLinkList(boardType, pgNum, linkStr, totalPostCnt);
+        mav.addObject("pagelist",pagelist);
 
         if (!StringUtils.isEmpty(key)) {
             session.setAttribute("key", key);

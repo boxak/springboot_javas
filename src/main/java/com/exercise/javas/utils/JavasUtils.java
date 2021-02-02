@@ -2,22 +2,19 @@ package com.exercise.javas.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.StringFormattedMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.filechooser.FileSystemView;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,14 +24,10 @@ import java.util.Date;
 import java.util.Properties;
 
 @Slf4j
-@PropertySource("/properties/File_Path.properties")
 public class JavasUtils {
 
     private JavasUtils() {
     }
-
-    @Value("${photo.directory}")
-    static String photoUploadDir;
 
     public static void uploadPhoto(String id, MultipartFile photo,
                                    HttpServletRequest request) {
@@ -43,7 +36,7 @@ public class JavasUtils {
             if (!photo.isEmpty()) {
                 content = photo.getBytes();
                 String path = request.getSession().getServletContext().getRealPath("/")
-                        + "resources/images2" + id + ".png";
+                        + "resources/images2/" + id + ".png";
                 log.info("photo path :::: {}", path);
                 File f = new File(path);
                 FileOutputStream fos = new FileOutputStream(f);
@@ -61,20 +54,19 @@ public class JavasUtils {
         return format.toString();
     }
 
-    @Value("${PAGE_LIST_TXT_PATH}")
-    static String pagelistPath;
-
-    @Value("${PREVOIUS_BTN_PATH}")
-    static String preBtnPath;
-
-    @Value("${NEXT_BTN_PATH}")
-    static String nextBtnPath;
-
     public static String getPageLinkList(String boardType, int curPage, String linkStr, long totalPostCnt) {
         PagingControl page = new PagingControl(curPage, totalPostCnt);
         StringBuilder builder = new StringBuilder();
         long startPage = page.getStartPage();
         long endPage = page.getEndPage();
+
+        ClassPathResource resource1 = new ClassPathResource("page/pageList.txt");
+        ClassPathResource resource2 = new ClassPathResource("page/previousPageButton.txt");
+        ClassPathResource resource3 = new ClassPathResource("page/nextPageButton.txt");
+
+        String pagelistPath = resource1.getPath();
+        String preBtnPath = resource2.getPath();
+        String nextBtnPath = resource3.getPath();
 
         if (page.hasPreData()) {
             builder.append(readFile(preBtnPath, StandardCharsets.UTF_8));

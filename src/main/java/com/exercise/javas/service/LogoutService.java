@@ -15,7 +15,7 @@ public class LogoutService {
             session.removeAttribute(JavasConstants.LOGIN_DTO);
         }
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
-        mav.addObject(JavasConstants.MSG,"logout success");
+        mav.addObject(JavasConstants.MSG_TYPE,"logoutSuccess");
         return mav;
     }
 }

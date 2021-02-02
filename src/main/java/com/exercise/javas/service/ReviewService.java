@@ -1,8 +1,6 @@
 package com.exercise.javas.service;
 
-import com.exercise.javas.dto.BoardDTO;
 import com.exercise.javas.dto.ReviewDTO;
-import com.exercise.javas.dto.UserDTO;
 import com.exercise.javas.repository.ReviewRepository;
 import com.exercise.javas.utils.JavasUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;

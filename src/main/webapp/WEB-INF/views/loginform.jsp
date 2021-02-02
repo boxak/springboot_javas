@@ -156,11 +156,11 @@
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
 				<li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-				<c:if test="${!empty loginVO}">
+				<c:if test="${!empty loginDTO}">
 					<li class="nav-item"><a href="/javas/mypage" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">마이페이지</a></li>
 					<li class="nav-item"><a href="/javas/logout" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그아웃</a></li>
 				</c:if>         	
-				<c:if test="${empty loginVO}">
+				<c:if test="${empty loginDTO}">
 
 
 	          	<li class="nav-item active"><a href="/javas/login/form" class="nav-link" style="font-family: 'Do Hyeon', sans-serif; font-size: 20px;">로그인</a></li>
@@ -175,19 +175,6 @@
 
 <br><br><br>
 
-<%
-	Cookie[] c = request.getCookies();
-	String cookieVal="";
-	if(c!=null){
-		for(Cookie i:c){
-			if(i.getName().equals("saveId")){
-				cookieVal=i.getValue();
-			}
-		}
-	}
-
-%>
-
 <div class="login-form">
     <form action="/javas/login" method="post">
         <h2 class="text-center" style="font-family: 'Do Hyeon', sans-serif; font-size: 35px;">잉력시장 회원이 아니시면, 회원가입해주세요.</h2>   
@@ -195,7 +182,7 @@
         	<div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                 <input type="text" class="form-control" name="id" placeholder="아이디" required="required"
-                value="<%= cookieVal!="" ? cookieVal : "" %>">				
+                value="${ cookie.saveId.value != "" ? cookie.saveId.value : "" }">
             </div>
         </div>
 		<div class="form-group">
@@ -211,8 +198,8 @@
             <button onclick="location.href='/javas/signForm'" class="btn btn-primary login-btn btn-block">회원가입</button>
         </div>
         <div class="clearfix">
-            <label class="pull-left checkbox-inline"><input type="checkbox" name="saveId"
-            value="<%= cookieVal!="" ? cookieVal : "" %>">아이디 저장</label>
+            <label class="pull-left checkbox-inline"><input type="checkbox" name="isSaveId"
+            value="true">아이디 저장</label>
             <a href="/javas/findID/Form" class="pull-right">아이디 찾기</a>
             <a href="/javas/findPW/Form" class="pull-right">비밀번호 찾기</a>
         </div>

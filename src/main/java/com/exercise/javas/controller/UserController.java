@@ -23,8 +23,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/signForm")
-    public String signForm() {
-        return "signForm";
+    public ModelAndView signForm() {
+        return new ModelAndView("signForm");
     }
 
     @PostMapping(value = "/signin.do")

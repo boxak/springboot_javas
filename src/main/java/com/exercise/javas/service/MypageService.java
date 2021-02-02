@@ -44,10 +44,10 @@ public class MypageService {
 
     public ModelAndView meminfoupdate(UserDTO dto, MultipartFile photo, HttpSession session, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView(JavasConstants.NOTICE_RESULT);
-        mav.addObject("Type", "meminfoupdate");
         try {
             userRepository.save(dto);
             JavasUtils.uploadPhoto(dto.getId(), photo, request);
+            mav.addObject(JavasConstants.MSG_TYPE, "meminfoupdate");
             mav.addObject(JavasConstants.MSG, "수정에 성공했습니다");
             session.setAttribute(JavasConstants.LOGIN_DTO, dto);
         } catch (Exception e) {
