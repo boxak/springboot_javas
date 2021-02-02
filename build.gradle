@@ -57,6 +57,7 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.mail/mail
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.3.3.RELEASE'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
