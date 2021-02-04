@@ -29,24 +29,28 @@ public class BoardService {
         ModelAndView mav = new ModelAndView(JavasConstants.BOARD_VIEW);
 
         List<BoardDTO> boardList = new ArrayList<>();
-        Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE);
         long totalPostCnt = 0;
-
+        pgNum = pgNum - 1;
         if (StringUtils.isEmpty(searchType) || StringUtils.isEmpty(key)) {
-            boardList = boardRepository.findAllByBoardType(boardType, page);
             totalPostCnt = boardRepository.countAllByBoardType(boardType);
+            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            boardList = boardRepository.findAllByBoardType(boardType, page);
         } else if ("title_content".equals(searchType)) {
-            boardList = boardRepository.findAllByBoardTypeAndTitleContainsOrContentContains(boardType, key, page);
             totalPostCnt = boardRepository.countAllByBoardTypeAndTitleContainsOrContentContains(boardType, key);
+            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            boardList = boardRepository.findAllByBoardTypeAndTitleContainsOrContentContains(boardType, key, page);
         } else if ("title".equals(searchType)) {
-            boardList = boardRepository.findAllByBoardTypeAndTitleContains(boardType, key, page);
             totalPostCnt = boardRepository.countAllByBoardTypeAndTitleContains(boardType, key);
+            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            boardList = boardRepository.findAllByBoardTypeAndTitleContains(boardType, key, page);
         } else if ("content".equals(searchType)) {
-            boardList = boardRepository.findAllByBoardTypeAndContentContains(boardType, key, page);
             totalPostCnt = boardRepository.countAllByBoardTypeAndContentContains(boardType, key);
+            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            boardList = boardRepository.findAllByBoardTypeAndContentContains(boardType, key, page);
         } else if("id".equals(searchType)) {
-            boardList = boardRepository.findAllByBoardTypeAndUserId(boardType, key, page);
             totalPostCnt = boardRepository.countAllByBoardTypeAndUserId(boardType, key);
+            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            boardList = boardRepository.findAllByBoardTypeAndUserId(boardType, key, page);
         }
 
         String linkStr = "";
@@ -119,6 +123,7 @@ public class BoardService {
         }
         String msg = actionKor + "에 " + result + "하였습니다.";
         mav.addObject(JavasConstants.MSG, msg);
+        mav.addObject(JavasConstants.BOARD_TYPE, dto.getBoardType());
         return mav;
     }
 }

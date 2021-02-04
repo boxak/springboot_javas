@@ -48,9 +48,9 @@ public class BoardRepositoryTest {
             dto.setReviewCnt(0);
             dto.setBoardType("jobad");
             if (i <= 50) {
-                dto.setId("jidide");
+                dto.setUserId("jidide");
             } else {
-                dto.setId("boxak");
+                dto.setUserId("boxak");
             }
             boardRepository.save(dto);
             log.info(dto.toString());
@@ -105,7 +105,7 @@ public class BoardRepositoryTest {
     @Test
     void T6() {
         Pageable page = PageRequest.of(1, 10);
-        List<BoardDTO> list = boardRepository.findAllByBoardTypeAndId("jobad", "jidide", page);
+        List<BoardDTO> list = boardRepository.findAllByBoardTypeAndUserId("jobad", "jidide", page);
         for (BoardDTO dto : list) {
             log.info(dto.toString());
         }
@@ -128,7 +128,7 @@ public class BoardRepositoryTest {
     void T8() {
         BoardDTO dto = new BoardDTO();
 
-        dto.setId("boxak30134");
+        dto.setUserId("boxak30134");
         dto.setBoardType("jobad");
         dto.setReviewCnt(0);
         dto.setDate(JavasUtils.getTodayString(JavasConstants.COMMON_DATE_FORMAT));
@@ -151,7 +151,7 @@ public class BoardRepositoryTest {
     void T9() {
         dto = new BoardDTO();
 
-        dto.setId("boxak30134");
+        dto.setUserId("boxak30134");
         dto.setBoardType("wantad");
         dto.setReviewCnt(0);
         dto.setDate(JavasUtils.getTodayString(JavasConstants.COMMON_DATE_FORMAT));

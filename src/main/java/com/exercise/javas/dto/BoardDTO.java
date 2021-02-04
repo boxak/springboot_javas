@@ -30,13 +30,9 @@ public class BoardDTO implements Serializable {
     @Field("name")
     private String name;
 
-    @NotBlank(message = "제목을 입력하세요!")
-    @Size(min = 5, max = 100, message = "제목은 5 ~ 100자 사이로 입력하세요!")
     @Field("title")
     private String title;
 
-    @NotBlank(message = "글 내용을 입력하세요!")
-    @Size(min = 10, max = 1000, message = "내용은 10 ~ 1000자 사이로 입력하세요!")
     @Field("content")
     private String content;
 
@@ -49,7 +45,6 @@ public class BoardDTO implements Serializable {
     @Field("reviewCnt")
     private int reviewCnt;
 
-    @NotBlank
     @Field("boardType")
     private String boardType;
 

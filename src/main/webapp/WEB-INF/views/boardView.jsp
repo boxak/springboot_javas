@@ -219,7 +219,7 @@
                     <div class="col-md-6 col-lg-4 ftco-animate">
                         <div class="blog-entry">
                             <div style="text-align : center;">
-                                <img src="/javas/resources/images2/${ dto1.id }.png" width="100">
+                                <img src="/javas/resources/images2/${ dto1.userId }.png" width="100">
                             </div>
                             <div style="text-align : center;">
                                 <div class="meta-date text-center p-2">
@@ -228,7 +228,7 @@
                                 <div class="text border border-top-0 p-4">
                                     <h3 class="heading"><a
                                             href="/javas/board/listOne?postId=${ dto1.postId }">${ dto1.title }</a></h3>
-                                    <a href="/javas/board/${ boardType }?&key=${ dto1.id }&type=id">${ dto1.id }</a>
+                                    <a href="/javas/board/${ boardType }?&key=${ dto1.userId }&type=id">${ dto1.userId }</a>
                                         <%-- <p><%= vo1.getPost_content() %></p>
                                         <p><%= vo1.getPost_location() %></p> --%>
                                     <!-- <div class="col-md-6 col-lg-4 ftco-animate"> -->
@@ -290,7 +290,7 @@
     <div class="col-lg-12 ftco-animate">
         <div class="about-author d-flex p-4 bg-light">
             <div style="margin:auto;">
-                <img src="/javas/resources/images2/${dto.id}.png" width=300>
+                <img src="/javas/resources/images2/${dto.userId}.png" width=300>
             </div>
             <div style="width : 500px; margin-right:100px;">
                 <h3>
@@ -299,7 +299,7 @@
                 <table>
                     <tr>
                         <td id=table4><label for="post_userid"> 작성자 아이디 &nbsp;&nbsp;</label></td>
-                        <td><c:out value="${dto.id}"/></td>
+                        <td><c:out value="${dto.userId}"/></td>
                     </tr>
                     <tr>
                         <td id=table4><label for="post_username"> 작성자 이름 &nbsp;&nbsp;</label></td>
@@ -360,9 +360,9 @@
                         <span id="star5" class="fa fa-star" onclick="star5()"></span>
                         <input type="hidden" id="review_rate" name="rate" value="0"/>
                         <input type="hidden" name="postId" value="${listOne.postId}">
-                        <input type="hidden" name="targetId" value="${listOne.id}">
+                        <input type="hidden" name="targetId" value="${listOne.userId}">
                         <input type="hidden" name="reviewId" value="0">
-                        <input type="hidden" name="reviewerId" value="${loginDTO.id}">
+                        <input type="hidden" name="reviewerId" value="${loginDTO.userId}">
                         <jsp:useBean id="now" class="java.util.Date"/>
                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today"/>
                         <input class="form-control" type="hidden" name="date" value="${today}"> <br>
@@ -460,7 +460,7 @@
                 location.href = "/javas/board/${ boardType }/InsertForm";
             }
             if (isRead == 'true') {
-                var isEnableUpdate = "${ loginDTO.id == dto.id ? 'true' : 'false' }"
+                var isEnableUpdate = "${ loginDTO.id == dto.userId ? 'true' : 'false' }"
                 if (command == "update") {
                     if (isEnableUpdate == 'true') {
                         location.href = '/javas/board/${ boardType }/UpdateForm';
@@ -550,7 +550,7 @@
                 var target = document.getElementById("reviewlistbox");
                 target.innerHTML = "";
                 for (var i in reviewList) {
-                    target.innerHTML += "<td width=100>" + reviewList[i].id + "</td> &nbsp; &nbsp;";
+                    target.innerHTML += "<td width=100>" + reviewList[i].reviewerId + "</td> &nbsp; &nbsp;";
                     target.innerHTML += "<td width=400>" + reviewList[i].comment + "</td> &nbsp; &nbsp;";
 
                     var star0 = "<span class='fa fa-star'></span><span class='fa fa-star'></span><span class='fa fa-star'></span><span class='fa fa-star'></span><span class='fa fa-star'></span>";
@@ -575,7 +575,7 @@
 
 
                     target.innerHTML += "<td width=200>" + reviewList[i].date + "</td> &nbsp; &nbsp;";
-                    if (reviewList[i].id == "${loginDTO.id}") {
+                    if (reviewList[i].reviewerId == "${loginDTO.id}") {
                         target.innerHTML += "<td><button id='delbtn' onclick='reqDeleteReview(\"" + reviewList[i].reviewId + "\")'>삭제</button></td><br>";
                     } else {
                         target.innerHTML += "<br>";

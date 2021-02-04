@@ -138,7 +138,7 @@
         <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center; font-family: 'Do Hyeon', sans-serif; font-size: 30px;">글 작성하기</h3>
                     <div class="form-group">
-						 <input class="form-control" type="hidden" name="postId" value="a">
+<%--						 <input class="form-control" type="hidden" name="postId" value="a">--%>
 						 <input class="form-control" type="hidden" name="userId" value="${loginDTO.id}">
 						 <input class="form-control" type="hidden" name="name" value="${loginDTO.name}">
 						<input class="form-control" type="hidden" name="boardType" value="${boardType}">

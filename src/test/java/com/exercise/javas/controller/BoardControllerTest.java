@@ -78,7 +78,7 @@ public class BoardControllerTest {
     void T2(){
         dto = new BoardDTO();
 
-        dto.setId("boxak");
+        dto.setUserId("boxak");
         dto.setBoardType("jobad");
         dto.setReviewCnt(0);
         dto.setDate(JavasUtils.getTodayString(JavasConstants.COMMON_DATE_FORMAT));

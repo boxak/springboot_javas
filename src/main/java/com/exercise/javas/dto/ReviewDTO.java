@@ -23,7 +23,6 @@ public class ReviewDTO implements Serializable {
     private String reviewerId;
     @Field("targetId")
     private String targetId;
-    @NotBlank(message = "코멘트를 입력해주세요!")
     @Field("comment")
     private String comment;
     @Field("date")
