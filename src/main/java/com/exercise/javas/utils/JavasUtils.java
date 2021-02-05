@@ -2,7 +2,10 @@ package com.exercise.javas.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Message;
@@ -12,12 +15,14 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +30,9 @@ import java.util.Properties;
 
 @Slf4j
 public class JavasUtils {
+
+    @Autowired
+    private static ResourceLoader resourceLoader;
 
     private JavasUtils() {
     }
@@ -55,27 +63,31 @@ public class JavasUtils {
     }
 
     public static String getPageLinkList(String boardType, int curPage, String linkStr, long totalPostCnt) {
+        curPage = curPage + 1;
         PagingControl page = new PagingControl(curPage, totalPostCnt);
         StringBuilder builder = new StringBuilder();
         long startPage = page.getStartPage();
         long endPage = page.getEndPage();
 
-        ClassPathResource resource1 = new ClassPathResource("page/pageList.txt");
-        ClassPathResource resource2 = new ClassPathResource("page/previousPageButton.txt");
-        ClassPathResource resource3 = new ClassPathResource("page/nextPageButton.txt");
-
-        String pagelistPath = resource1.getPath();
-        String preBtnPath = resource2.getPath();
-        String nextBtnPath = resource3.getPath();
+        String preBtnHtml = JavasConstants.PRE_BTN_HTML;
+        String pageListHtml = JavasConstants.PAGE_LIST_HTML;
+        String pageListHtmlI = JavasConstants.PAGE_LIST_HTML_I;
+        String nextBtnHtml = JavasConstants.NEXT_BTN_HTML;
 
         if (page.hasPreData()) {
-            builder.append(readFile(preBtnPath, StandardCharsets.UTF_8));
+            builder.append(preBtnHtml);
         }
 
-        builder.append(readFile(pagelistPath, StandardCharsets.UTF_8));
+        for (int i = (int)page.getStartPage();i<=page.getEndPage();i++) {
+            if (i == curPage) {
+                builder.append(JavasConstants.PAGE_LIST_HTML_I.replace("{i}",i+""));
+            } else {
+                builder.append(JavasConstants.PAGE_LIST_HTML.replace("{i}",i+""));
+            }
+        }
 
         if (page.hasNextData()) {
-            builder.append(readFile(nextBtnPath, StandardCharsets.UTF_8));
+            builder.append(nextBtnHtml);
         }
 
         String pageStr = builder.toString();
@@ -88,17 +100,19 @@ public class JavasUtils {
         return pageStr;
     }
 
-    public static String readFile(String path, Charset charset) {
-        String txt = "";
-        byte[] encoded = null;
-        try {
-            encoded = Files.readAllBytes(Paths.get(path));
-            txt = new String(encoded, charset);
-        } catch (IOException e) {
-            messegingExLog(e.toString(), e.getMessage());
-        }
-        return txt;
-    }
+//    public static String readFile(String path, Charset charset) {
+//        StringBuilder builder = new StringBuilder();
+//        Path filePath = Paths.get(path);
+//        try (BufferedReader br = Files.newBufferedReader(filePath)) {
+//            String line;
+//            while((line = br.readLine()) != null) {
+//                builder.append(line);
+//            }
+//        } catch (IOException e) {
+//            messegingExLog(e.toString(), e.getMessage());
+//        }
+//        return builder.toString();
+//    }
 
     public static String getTodayString(String dateFormat) {
         return new SimpleDateFormat(dateFormat).format(new Date());

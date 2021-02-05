@@ -15,7 +15,7 @@ public class ReviewController {
     ReviewService reviewService;
 
     @ResponseBody
-    @GetMapping(value = "/review", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/review", produces = "application/json; charset=UTF-8")
     public String reviewList(String postId) throws JsonProcessingException {
         return reviewService.reviewList(postId);
     }
@@ -33,7 +33,7 @@ public class ReviewController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/review/delete", produces = "application/json; charset=UTF-8")
+    @PostMapping(value = "/review/delete", produces = "application/json; charset=UTF-8")
     public String delete(String postId, String reviewId) {
         return reviewService.delete(reviewId);
     }

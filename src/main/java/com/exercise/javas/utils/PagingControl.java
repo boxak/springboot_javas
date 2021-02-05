@@ -15,12 +15,12 @@ public class PagingControl {
         return ((totalPostCnt - 1) / POST_CNT_PER_PAGE) + 1;
     }
 
-    public long getStartPage() {
+    public int getStartPage() {
         return ((curPage - 1) / PAGE_UNIT) * PAGE_UNIT + 1;
     }
 
-    public long getEndPage() {
-        return Math.min(getStartPage() + PAGE_UNIT - 1, getTotalPage());
+    public int getEndPage() {
+        return (int)Math.min(getStartPage() + PAGE_UNIT - 1, getTotalPage());
     }
 
     public boolean hasPreData() {

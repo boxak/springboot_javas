@@ -361,8 +361,7 @@
                         <input type="hidden" id="review_rate" name="rate" value="0"/>
                         <input type="hidden" name="postId" value="${listOne.postId}">
                         <input type="hidden" name="targetId" value="${listOne.userId}">
-                        <input type="hidden" name="reviewId" value="0">
-                        <input type="hidden" name="reviewerId" value="${loginDTO.userId}">
+                        <input type="hidden" name="reviewerId" value="${loginDTO.id}">
                         <jsp:useBean id="now" class="java.util.Date"/>
                         <fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="today"/>
                         <input class="form-control" type="hidden" name="date" value="${today}"> <br>
@@ -535,11 +534,11 @@
 
         formdata.enctype = 'multipart/form-data';
         formdata.method = 'post';
-        formdata.action = '/javas/review/${boardType}';
+        formdata.action = '/javas/review';
 
         formdata.append('postId', '${listOne.postId}');
 
-        request.open('post', '/javas/review/${boardType}', true);
+        request.open('post', '/javas/review', true);
         request.send(formdata);
 
         request.onload = function (event) {

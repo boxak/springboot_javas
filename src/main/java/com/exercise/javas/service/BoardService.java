@@ -33,23 +33,38 @@ public class BoardService {
         pgNum = pgNum - 1;
         if (StringUtils.isEmpty(searchType) || StringUtils.isEmpty(key)) {
             totalPostCnt = boardRepository.countAllByBoardType(boardType);
-            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            Pageable page = null;
+            if (totalPostCnt > 0) {
+                page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int) totalPostCnt : POST_CNT_PER_PAGE);
+            } else page = Pageable.unpaged();
             boardList = boardRepository.findAllByBoardType(boardType, page);
         } else if ("title_content".equals(searchType)) {
             totalPostCnt = boardRepository.countAllByBoardTypeAndTitleContainsOrContentContains(boardType, key);
-            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            Pageable page = null;
+            if (totalPostCnt > 0) {
+                page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int) totalPostCnt : POST_CNT_PER_PAGE);
+            } else page = Pageable.unpaged();
             boardList = boardRepository.findAllByBoardTypeAndTitleContainsOrContentContains(boardType, key, page);
         } else if ("title".equals(searchType)) {
             totalPostCnt = boardRepository.countAllByBoardTypeAndTitleContains(boardType, key);
-            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            Pageable page = null;
+            if (totalPostCnt > 0) {
+                page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int) totalPostCnt : POST_CNT_PER_PAGE);
+            } else page = Pageable.unpaged();
             boardList = boardRepository.findAllByBoardTypeAndTitleContains(boardType, key, page);
         } else if ("content".equals(searchType)) {
             totalPostCnt = boardRepository.countAllByBoardTypeAndContentContains(boardType, key);
-            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            Pageable page = null;
+            if (totalPostCnt > 0) {
+                page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int) totalPostCnt : POST_CNT_PER_PAGE);
+            } else page = Pageable.unpaged();
             boardList = boardRepository.findAllByBoardTypeAndContentContains(boardType, key, page);
         } else if("id".equals(searchType)) {
             totalPostCnt = boardRepository.countAllByBoardTypeAndUserId(boardType, key);
-            Pageable page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int)totalPostCnt : POST_CNT_PER_PAGE);
+            Pageable page = null;
+            if (totalPostCnt > 0) {
+                page = PageRequest.of(pgNum, POST_CNT_PER_PAGE > totalPostCnt ? (int) totalPostCnt : POST_CNT_PER_PAGE);
+            } else page = Pageable.unpaged();
             boardList = boardRepository.findAllByBoardTypeAndUserId(boardType, key, page);
         }
 
@@ -71,13 +86,14 @@ public class BoardService {
         mav.addObject("pagelist",pagelist);
 
         if (!StringUtils.isEmpty(key)) {
-            session.setAttribute("key", key);
+            session.setAttribute(JavasConstants.KEY, key);
         }
         if (!StringUtils.isEmpty(searchType)) {
-            session.setAttribute("type",searchType);
+            session.setAttribute(JavasConstants.TYPE,searchType);
         }
-        session.setAttribute("boardType",boardList);
-        session.setAttribute("pgNum", pgNum);
+        session.setAttribute(JavasConstants.BOARD_TYPE,boardType);
+        session.setAttribute(JavasConstants.PG_NUM, pgNum+1);
+        session.setAttribute(JavasConstants.BOARD_TYPE_KOR, boardType.equals(JavasConstants.JOBAD) ? "구인 내용" : "구직 내용");
 
         return mav;
     }
@@ -91,9 +107,8 @@ public class BoardService {
             int hit = dto.getHit();
             dto.setHit(hit + 1);
             boardRepository.save(dto);
-            session.setAttribute("listOne", dto);
+            session.setAttribute(JavasConstants.LIST_ONE, dto);
             mav.addObject(JavasConstants.DTO, dto);
-            mav.addObject(JavasConstants.BOARD_TYPE_TITLE, boardType.equals(JavasConstants.JOBAD) ? "구인 내용" : "구직 내용");
         }
         return mav;
     }

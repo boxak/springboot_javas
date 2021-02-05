@@ -144,7 +144,7 @@
 					</div>--%>
 					<div class="form-group">
 						 <input type="hidden" class="form-control" name="postId" value="${listOne.postId}">
-						 <input type="hidden" class="form-control" name="id" value="${listOne.id}">
+						 <input type="hidden" class="form-control" name="userId" value="${listOne.userId}">
 						 <input type="hidden" class="form-control" name="name" value="${ listOne.name }">
 						 <input type="hidden" class="form-control" name="date" value="${ listOne.date }">
 						 <input type="hidden" class="form-control" name="hit" value="${ listOne.hit }">
