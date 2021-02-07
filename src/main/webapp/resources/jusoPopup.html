@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>도로명 주소 팝업API</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="juso.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+function init() {
+    var url = location.href;
+    var confmKey = "devU01TX0FVVEgyMDIxMDIwNzE3MDgyMzExMDc4OTU="
+    var resultType="4";
+    var inputYn=$("input[name=inputYn]").val();
+    if (inputYn !="Y" ) {
+           document.form.confmKey.value=confmKey;
+           document.form.returnUrl.value=url;
+           document.form.resultType.value=resultType;
+           document.form.action="http://www.juso.go.kr/addrlink/addrLinkUrl.do" ;
+           document.form.submit();
+    } else {
+           opener.jusoCallBack($("input[name=roadFullAddr]").val());
+           window.close();
+    }
+};
+</script>
+</head>
+<body onload="init();">
+<form id="form" name="form" method="post">
+    <input type="hidden" id="confmKey" name="confmKey" th:value="${confmKey}"/>
+    <input type="hidden" id="returnUrl" name="returnUrl" value=""/>
+    <input type="hidden" id="resultType" name="resultType" value=""/>
+</form>
+<input type="hidden" id="inputYn" name="inputYn" th:value="${inputYn}"/>
+</body>

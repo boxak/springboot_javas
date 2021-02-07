@@ -48,12 +48,12 @@ function idCheck(){
 		var param="id="+id;
 		httpRequest = getXMLHttpRequest();
 		httpRequest.onload = function(event){
-			console.log(httpRequest.status);
 			if(httpRequest.status==200){
 				var resultText = httpRequest.responseText;
-				console.log(resultText);
-				var obj = JSON.parse(resultText);
-				if(obj.result=='true'){
+				var result = JSON.parse(resultText);
+				console.log(result);
+				console.log(result == true);
+				if(result == true){
 					alert("사용할 수 없는 아이디입니다.");
 					document.getElementById("cancelBtn").style.visibility = 'visible';
 					document.getElementById("useBtn").style.visibility = 'hidden';
