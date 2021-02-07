@@ -1,16 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>notice Result</title>
+    <meta charset="UTF-8">
+    <title>notice Result</title>
 </head>
 <body>
-<script>
-    var msg = "${ msg }";
-    var type = "${ type }"
-
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var msg = [[${msg}]];
+    var type = [[${type}]];
+    var boardType = [[${boardType}]];
+    /*]]>*/
+    console.log(type);
     if (type == "unauthorized") {
         alert("접근권한이 없습니다.");
         window.location.href = document.referrer;
@@ -62,7 +63,7 @@
     }
     else {
         alert(msg);
-        window.location.href = "/javas/board/${ boardType }";
+        window.location.href = "/javas/board/"+boardType;
     }
 
 </script>
